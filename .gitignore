@@ -1,0 +1,4 @@
+/build-server/node_modules/
+/client/node_modules
+/main-server/node_modules
+/proxy/node_modules
