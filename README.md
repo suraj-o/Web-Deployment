@@ -1,100 +1,136 @@
+<div align="center">
 
-Vite Deployment System
-Welcome to the Vite Deployment System! This project integrates several modern technologies to create a robust deployment and monitoring system. Below you'll find information on the technologies used, as well as instructions on how to set up and run each part of the project.
+<div>
+    <img src="https://img.shields.io/badge/-TypeScript-black?style=for-the-badge&logoColor=white&logo=typescript&color=3178C6" alt="typescript" />
+    <img src="https://img.shields.io/badge/-Next_JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=000000" alt="nextdotjs" />
+    <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
+    <img src="https://img.shields.io/badge/-Docker-black?style=for-the-badge&logoColor=white&logo=docker&color=3178C6"alt="tailwindcss" />
+    <img src="https://img.shields.io/badge/-Redis-black?style=for-the-badge&logoColor=white&logo=redis&color=91030C"alt="tailwindcss" />
+  </div>
 
-Technology Stack
-Node.js
-Express.js
-AWS
-Docker
-Kafka
-Socket.IO
-PostgreSQL
-ClickHouse
-Project Structure
-The project is divided into three main components:
+<h3 align="center">vite deployment system</h3>
 
-1. Build Server
-The build server handles the build processes for the application.
+</div>  
 
-Commands
-To set up and run the Build Server, use the following commands:
+## <a name="tech-stack">⚙️ Tech Stack</a>
 
-bash
-Copy code
+- Next.js
+- Tailwind CSS
+- Shadcn
+- Socket.Io
+- Node JS
+- Express Js
+- Kafka
+- Docker
+- AWS
+- PostgresDB
+- ClickHouseDB
+
+## <a name="features">🔋 Features</a>
+
+👉 **Scalable Deployment**: Scalable Deployment: Efficiently deploy and manage builds with a robust build server.
+
+👉 **API Management**: Core API functionalities managed by the Main API Server.
+
+👉 **Dynamic Routing**: The Proxy component ensures seamless routing and request handling.
+
+👉 **Real-time Communication**: Socket.IO integration for real-time logs updates and communication while deploying app.
+
+👉 **Reliable Logging**: Kafka ensures reliable log delivery and ClickHouse facilitates fast log querying.
+
+👉 **Database Integration**: PostgreSQL for structured data and ClickHouse for high-performance analytics.
+
+👉 *Automated Builds**: Utilize Docker and AWS ECS (Elastic Container Service) for seamless build automation.
+
+👉 **Code Storage**: AWS S3 for storing and managing code artifacts.
+ 
+
+## <a name="quick-start">🤸 Quick Start Locally</a>
+
+Follow these steps to set up the project locally on your machine.
+
+**Prerequisites**
+
+- [Node.js](https://nodejs.org/en)
+- [npm](https://www.npmjs.com/) (Node Package Manager)
+- [Docker](https://docker.com/)
+- [AWS](https://aws.amazon.com/)
+- [kafka](https://kafka.apache.org/)
+- [clickHouse](https://clickhouse.com/)
+
+**Cloning the Repository**
+
+```bash or powershell
+git clone https://github.com/suraj-o/https://github.com/suraj-o/Web-Deployment
+cd Web-Deployment
+```
+
+**First of all start server**
+
+**NOTE**: change your aws, kafka, clickhouse, postgresDB  crediential with your credentials  
+
+```bash
+---you must change credentials given following fields below---
+
+--AWS--
+1=> /build/script.js:11
+2=> /main-server/configs/index.js:9
+
+--kafka--
+1=> /main-server/configs/index.js:17
+2=> /build/script.js:21
+
+--CLickhouseDB--
+1=> /main-server/configs/index.js:30
+
+```
+
+
+**Installation**
+
+**build-server**
+```bash
+---Install the project dependencies using npm:---
+
 cd build-server
 npm install
+
 npm start
-2. Main API Server
-The Main API Server provides core API functionality for the application.
+```
 
-Commands
-To set up and run the Main API Server, use the following commands:
-
-bash
-Copy code
+**main-server**
+```bash
+---run following command---
 cd main-server
 npm install
+
 npm start
-3. Proxy
-The Proxy component manages routing and API requests between services.
 
-Commands
-To set up and run the Proxy, use the following commands:
-
-bash
-Copy code
+```
+**proxy**
+```bash
+---run following command---
 cd proxy
 npm install
-npm run dev
-Running the Project
-To run the entire project, navigate to each component’s directory and execute the respective commands. For convenience, you can also use the following commands to start all components:
 
-Start All Components
-Build Server
-
-bash
-Copy code
-cd build-server
-npm install
 npm start
-Main API Server
 
-bash
-Copy code
-cd main-server
-npm install
-npm start
-Proxy
+```
 
-bash
-Copy code
-cd proxy
-npm install
-npm run dev
-Docker Setup (Optional)
-To streamline running the project with Docker, create a docker-compose.yml file in the root directory:
+**Docker Setup (Optional)**
 
-Docker Compose Configuration
-yaml
-Copy code
+To simplify running the project using Docker, create a docker-compose.yml file at the root of your project:
+
+```bash
 version: '3'
 services:
-  build-server:
-    build: ./build-server
-    command: npm start
-    volumes:
-      - ./build-server:/app
-    ports:
-      - "3000:3000"
-
   main-server:
     build: ./main-server
     command: npm start
     volumes:
       - ./main-server:/app
     ports:
-      - "3001:3001"
+      - "4000:4000"
 
   proxy:
     build: ./proxy
@@ -102,14 +138,20 @@ services:
     volumes:
       - ./proxy:/app
     ports:
-      - "3002:3002"
-To start the services using Docker Compose, run:
+      - "9000:9000"
+```
 
-bash
-Copy code
+To start the services with Docker Compose, use:
+```bash
 docker-compose up --build
-Contributing
-We welcome contributions to enhance this project. Please refer to our CONTRIBUTING.md for guidelines on how to contribute.
+```
 
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
+**Go to client folder**
+```bash
+---run following command---
+cd ..
+cd client
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
