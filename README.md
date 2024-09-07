@@ -68,7 +68,7 @@ cd Web-Deployment
 
 **First of all start server**
 
-**NOTE**: change your aws, kafka, clickhouse, postgresDB  crediential with your credentials  
+**NOTE**: change aws, kafka, clickhouse, postgresDB  crediential with your credentials  
 
 ```bash
 ---you must change credentials given following fields below---
