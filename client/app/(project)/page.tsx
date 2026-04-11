@@ -7,6 +7,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { images } from "@/actions";
+import { config } from "@/lib/config";
 
 interface ProjectsType{
   name:string,
@@ -31,8 +32,8 @@ export default function page(){
 
   async function getProjects(){
     try {
-      const user= await getUserData()
-      const {data}:{data:{success:boolean,Projects:ProjectsType[]}}= await axios.get(`http:///localhost:4000/api/v1/projects?userid=${user.id}`,{
+      const user = await getUserData()
+      const { data }: { data: { success: boolean, Projects: ProjectsType[] } } = await axios.get(`${config.MAIN_SERVER_URL}/api/v1/projects?userid=${user.id}`, {
       })
       setProjects(prev=>[...data.Projects])
 

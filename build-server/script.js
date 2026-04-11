@@ -1,34 +1,35 @@
-const {exec}= require("child_process")
+const { exec } = require("child_process")
 const path = require("path")
-const {S3Client,PutObjectCommand}= require("@aws-sdk/client-s3")
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3")
 const fs = require("fs")
 const mime = require('mime-types')
-const {Kafka}=require("kafkajs")
+const { Kafka } = require("kafkajs")
+const config = require("./config")
 
-const PROJECT_ID=process.env.PROJECT_ID
-const DEPLOYMENT_ID=process.env.DEPLOYMENT_ID
+const PROJECT_ID = config.PROJECT_ID
+const DEPLOYMENT_ID = config.DEPLOYMENT_ID
 
 // AWS S3 CLIENT INSTANCE
 const client = new S3Client({
-    region:"",
-    credentials:{
-        accessKeyId:"",
-        secretAccessKey:""
+    region: config.AWS.REGION,
+    credentials: {
+        accessKeyId: config.AWS.ACCESS_KEY || "",
+        secretAccessKey: config.AWS.SECRET_KEY || ""
     }
 })
 
 
 const kafka = new Kafka({
-    clientId:`dokcer-deployment-${DEPLOYMENT_ID}`,
-    brokers:[""],
-    sasl:{
-        username:"",
-        password:"",
-        mechanism:"",
-    },
-    ssl:{
-        ca:[fs.readFileSync(path.join(__dirname,"ca.pem"),"utf-8")]
-    }
+    clientId: config.KAFKA.CLIENT_ID,
+    brokers: config.KAFKA.BROKERS,
+    sasl: config.KAFKA.USERNAME && config.KAFKA.PASSWORD ? {
+        username: config.KAFKA.USERNAME,
+        password: config.KAFKA.PASSWORD,
+        mechanism: config.KAFKA.MECHANISM,
+    } : undefined,
+    ssl: fs.existsSync(config.KAFKA.CA_PATH) ? {
+        ca: [fs.readFileSync(config.KAFKA.CA_PATH, "utf-8")]
+    } : undefined
 })
 
 let producer;
@@ -84,8 +85,8 @@ async function init(){
             await logPublisher(`Uploading -> ${filePath} `);
 
             const command = new PutObjectCommand({
-                Bucket:"vercel-builder-outputs",
-                Key:`_ouput/${PROJECT_ID}/${filePath}`,
+                Bucket: config.AWS.BUCKET,
+                Key: `_ouput/${PROJECT_ID}/${filePath}`,
                 Body:fs.createReadStream(file),
                 ContentType:mime.lookup(file),
             })

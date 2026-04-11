@@ -1,15 +1,15 @@
-import {Server} from "socket.io"
-import { CHClient, kafka } from "../configs/index.js"
-import {v4} from "uuid"
+import { Server } from "socket.io"
+import { CHClient, kafka, config } from "../configs/index.js"
+import { v4 } from "uuid"
 
 export class IoServer {
-    constructor(){
-        this.PORT=9002
-        this.io= new Server({
-            cors:"http://localhost:3000",
-            method:["GET","POST"]
+    constructor() {
+        this.PORT = config.SOCKET_PORT
+        this.io = new Server({
+            cors: process.env.CLIENT_URL || "http://localhost:3000",
+            method: ["GET", "POST"]
         })
-        this.consumer= kafka.consumer({groupId:"api-build-logs-consumer"})
+        this.consumer = kafka.consumer({ groupId: "api-build-logs-consumer" })
     }
 
     async initKafakConsumer(){

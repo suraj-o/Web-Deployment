@@ -1,8 +1,9 @@
 import { pClient } from "../configs/index.js"
 import {ECSRuntaskUp} from "../services/runtask.js"
 import {generateSlug} from "random-word-slugs"
+import { config } from "../configs/index.js"
 
-export const user =async(req,res,next)=>{
+export const user = async (req, res, next) => {
     try {
         const {name,email,id}= req.body
         if(!name || !email ){
@@ -110,9 +111,9 @@ export const deploy= async(req,res,next)=>{
             return res.status(201).json({
                 success:true,
                 message:{
-                    deployment_id:deployment.id,
-                    status:"queed",
-                    link:`http://${project.subDomain}.localhost:9000`
+                    deployment_id: deployment.id,
+                    status: "queued",
+                    link: `http://${project.subDomain}.${config.PROXY_BASE_URL}`
                 }
             })
         }

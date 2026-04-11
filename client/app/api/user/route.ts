@@ -1,6 +1,7 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import axios from "axios";
 import { NextResponse } from "next/server";
+import { config } from "@/lib/config";
 
 export async function GET(){
     const {getUser} = getKindeServerSession();
@@ -10,7 +11,7 @@ export async function GET(){
         throw new Error("something went wrong while authentication")
     }
 
-    const {data} = await axios.post("http://localhost:4000/api/v1/user",{
+    const { data } = await axios.post(`${config.MAIN_SERVER_URL}/api/v1/user`, {
         id :user.id,
         email:user.email,
         name:user.given_name
@@ -22,7 +23,7 @@ export async function GET(){
     })
 
     if(!data){
-        return NextResponse.redirect("http://localhost:3000/api/auth/login")
+        return NextResponse.redirect(`${config.CLIENT_URL}/api/auth/login`)
     }
-    return NextResponse.redirect("http://localhost:3000")
+    return NextResponse.redirect(config.CLIENT_URL)
 }
