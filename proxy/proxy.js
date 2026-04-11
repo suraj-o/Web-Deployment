@@ -1,10 +1,11 @@
 const { PrismaClient } = require("@prisma/client");
 const express = require("express");
-const httpProxy =require("http-proxy")
+const httpProxy = require("http-proxy")
+const config = require("./config")
 
 const app = express();
-const PORT=7000;
-let basePath= "https://vercel-outputs.s3.es-north-1.amazonaws.com/_ouput"
+const PORT = config.PORT;
+let basePath = config.S3_BASE_URL
 const proxy = httpProxy.createProxy()
 
 

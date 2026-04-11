@@ -1,6 +1,7 @@
 "use client"
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import {io, Socket} from "socket.io-client"
+import { io, Socket } from "socket.io-client"
+import { config } from '@/lib/config'
 
 export interface ContextTypes{
     logs:string
@@ -23,12 +24,12 @@ export function useSocketContext(){
     }
 }
 
-const SocketProvider:React.FC<SocketProviderProps> = ({children}) => {
-   const [socket,setSocket]=useState<Socket>()
-   const [logs,setLogs]=useState<string>("")
+const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
+    const [socket, setSocket] = useState<Socket>()
+    const [logs, setLogs] = useState<string>("")
 
-    useEffect(()=>{
-       const _socket=io("http://localhost:9002")
+    useEffect(() => {
+        const _socket = io(config.SOCKET_SERVER_URL)
        
        _socket.on('LOGS',(data)=>{
            const parsedData=JSON.parse(data)

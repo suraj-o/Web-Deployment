@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/hooks/use-toast"
 import axios from "axios"
-import {useRouter} from "next/navigation"
+import { useRouter } from "next/navigation"
+import { config } from "@/lib/config"
 export default function page(){
 
   const router = useRouter()
@@ -14,13 +15,13 @@ export default function page(){
     "use Server";
   try {
     const user = await getUserData()
-    const {data}=await axios.post("http://localhost:4000/api/v1/project",{
+    const { data } = await axios.post(`${config.MAIN_SERVER_URL}/api/v1/project`, {
       name: e.get("name") as string,
       giturl: e.get("gitUrl") as string,
       createdId: user.id as string
-    },{
-      headers:{
-        "Content-Type":"application/json"
+    }, {
+      headers: {
+        "Content-Type": "application/json"
       }
     })
     toast({

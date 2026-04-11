@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
+import { config } from "@/lib/config";
 
 
 interface DataResponsetype{
@@ -25,8 +26,8 @@ export default function page({params}:{params:{id:string}}){
 
   const clickHandler=async()=>{
     setIsDeploy(true)
-    const {data}:{data:DataResponsetype} = await axios.get(`http://localhost:4000/api/v1/deploy?projectid=${params.id}`);
-    socket.emit('subscribe',data.message.deployment_id)
+    const { data }: { data: DataResponsetype } = await axios.get(`${config.MAIN_SERVER_URL}/api/v1/deploy?projectid=${params.id}`);
+    socket.emit('subscribe', data.message.deployment_id)
   }
 
   useEffect(()=>{
